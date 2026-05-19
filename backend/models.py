@@ -46,7 +46,7 @@ class Job(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
     status = Column(String(50), nullable=False)
-    source_integer = Column(
+    source_instance_id = Column(
         Integer,
         ForeignKey("instances.id")
     )
