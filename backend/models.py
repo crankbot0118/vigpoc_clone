@@ -32,8 +32,8 @@ class Job(Base):
     name = Column(String(100), nullable=False)
     status = Column(String(50), nullable=False)
 
-    source_instance_id = Column(Integer, ForeignKey("instances.id"))
-    target_instance_id = Column(Integer, ForeignKey("instances.id"))
+    source_instance_id = Column(Integer)
+    target_instance_id = Column(Integer)
 
     created_on = Column(DateTime, default=datetime.utcnow)
     last_update_on = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
