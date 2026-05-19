@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends
-from db import Base, engine
+from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 from models import Job
 
