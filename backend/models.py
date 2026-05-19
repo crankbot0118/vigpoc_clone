@@ -5,66 +5,35 @@ from sqlalchemy import (
     DateTime,
     ForeignKey
 )
-from sqlalchemy.orm import relationship
 from datetime import datetime
 from db import Base
 
+
 class Instance(Base):
     __tablename__ = "instances"
+
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
-    # One Instance -> Many Jobs
-    jobs = relationship(
-        "Job",
-        back_populates="target_instance"
-    )
-    # One Instance -> One Agent
-    agent = relationship(
-        "Agent",
-        back_populates="instance",
-        uselist=False
-    )
 
 
 class Agent(Base):
     __tablename__ = "agents"
+
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
-    instance_id = Column(
-        Integer,
-        ForeignKey("instances.id"),
-        unique=True
-    )
-    # Agent belongs to one Instance
-    instance = relationship(
-        "Instance",
-        back_populates="agent"
-    )
+
+    instance_id = Column(Integer, ForeignKey("instances.id"), unique=True)
+
 
 class Job(Base):
     __tablename__ = "jobs"
+
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
     status = Column(String(50), nullable=False)
-    source_instance_id = Column(
-        Integer,
-        ForeignKey("instances.id")
-    )
-    target_instance_id = Column(
-        Integer
-    )
-    created_on = Column(
-        DateTime,
-        default=datetime.utcnow
-    )
-    last_update_on = Column(
-        DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow
-    )
-    # Job belongs to one Instance
-    source_instance_id = relationship(
-        "Instance",
-        foreign_keys=[source_instance_id],
-        back_populates="jobs"
-    )
+
+    source_instance_id = Column(Integer, ForeignKey("instances.id"))
+    target_instance_id = Column(Integer, ForeignKey("instances.id"))
+
+    created_on = Column(DateTime, default=datetime.utcnow)
+    last_update_on = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
