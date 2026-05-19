@@ -63,7 +63,7 @@ class Job(Base):
         onupdate=datetime.utcnow
     )
     # Job belongs to one Instance
-    source_instance = relationship(
+    source_instance_id = relationship(
         "Instance",
         back_populates="jobs"
     )
