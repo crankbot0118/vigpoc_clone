@@ -51,8 +51,7 @@ class Job(Base):
         ForeignKey("instances.id")
     )
     target_instance_id = Column(
-        Integer,
-        ForeignKey("instances.id")
+        Integer
     )
     created_on = Column(
         DateTime,
@@ -64,7 +63,7 @@ class Job(Base):
         onupdate=datetime.utcnow
     )
     # Job belongs to one Instance
-    target_instance = relationship(
+    source_instance = relationship(
         "Instance",
         back_populates="jobs"
     )
