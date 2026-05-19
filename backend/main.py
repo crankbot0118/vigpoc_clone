@@ -1,7 +1,12 @@
 from fastapi import FastAPI
+from db import Base, engine
+from models import Job
 
-app=FastAPI()
+app = FastAPI()
+
+Base.metadata.create_all(bind=engine)
+
 
 @app.get("/")
-async def root():
-    return {"message": "Clone Platform Backend Running."}
+def root():
+    return {"message": "Clone Platform Backend Running"}
