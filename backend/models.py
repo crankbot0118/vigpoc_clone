@@ -65,5 +65,6 @@ class Job(Base):
     # Job belongs to one Instance
     source_instance_id = relationship(
         "Instance",
+        foreign_keys=[source_instance_id],
         back_populates="jobs"
     )
