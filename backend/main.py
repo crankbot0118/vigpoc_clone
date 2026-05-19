@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from db import Base, engine
+from sqlalchemy.orm import Session
 from models import Job
 
 app = FastAPI()
