@@ -6,7 +6,26 @@ app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
 
-
 @app.get("/")
 def root():
     return {"message": "Clone Platform Backend Running"}
+
+@app.post("/submit-job")
+def submit_job(payload: dict, db: Session = Depends(get_db)):
+    """
+    Creates a new job in DB.
+    """
+    new_job = Job(
+        status="PENDING",
+        payload=payload
+    )
+
+    db.add(new_job)
+    db.commit()
+    db.refresh(new_job)
+
+    return {
+        "message": "Job submitted successfully",
+        "job_id": new_job.id,
+        "status": new_job.status
+    }
