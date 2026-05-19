@@ -20,12 +20,12 @@ def root():
 
 @app.post("/submit-job")
 def submit_job(payload: dict, db: Session = Depends(get_db)):
-    """
-    Creates a new job in DB.
-    """
+
     new_job = Job(
+        name=payload["name"],
         status="PENDING",
-        payload=payload
+        source_instance_id=int(payload["source_instance_id"]),
+        target_instance_id=int(payload["target_instance_id"])
     )
 
     db.add(new_job)
